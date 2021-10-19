@@ -17,7 +17,7 @@ const SIZES = {
     '--border-radius': '4px'
   },
   large: {
-    '--height': '24px',
+    '--height': '16px',
     '--padding': '4px 4px',
     '--border-radius': '8px'
   },
@@ -26,17 +26,18 @@ const SIZES = {
 const ProgressBar = ({ value, size }) => {
   return (
     <Wrapper style={SIZES[size]} role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
-      <InnerBar progress={value}>
-        <VisuallyHidden>{value}%</VisuallyHidden>
-      </InnerBar>
+      <InnerBarWrapper>
+        <InnerBar progress={value}>
+          <VisuallyHidden>{value}%</VisuallyHidden>
+        </InnerBar>
+      </InnerBarWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  box-sizing: border-box;
   width: 370px;
-  height: var(--height);
+  
   padding: var(--padding);
   border-radius: var(--border-radius);
   
@@ -44,12 +45,18 @@ const Wrapper = styled.div`
   box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
 `;
 
+const InnerBarWrapper = styled.div`
+  border-radius: 4px;
+
+  /* Round off corners when progress bar is near-full */
+  overflow: hidden;
+`;
+
 const InnerBar = styled.div`
-  --radius-near-end: ${p => p.progress > 99 ? (p.progress - 99) * 4 : 0}px;
   background-color: ${COLORS.primary};
-  border-radius: 4px var(--radius-near-end) var(--radius-near-end) 4px;
+  border-radius: 4px 0px 0px 4px;
   width: ${p => p.progress}%;
-  height: 100%;
+  height: var(--height);
 `;
 
 export default ProgressBar;
