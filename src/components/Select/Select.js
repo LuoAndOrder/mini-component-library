@@ -16,9 +16,9 @@ const Select = ({ label, value, onChange, children }) => {
         </GhostSelectWrapper>
 
         <CustomSelectWrapper>
-          <SelectedText>{displayedValue}</SelectedText>
-          <IconWrapper>
-            <Icon id="chevron-down" size={12} />
+          {displayedValue}
+          <IconWrapper style={{ '--size': 24 + 'px' }}>
+            <Icon id="chevron-down" size={24} strokeWidth={1} />
           </IconWrapper>
         </CustomSelectWrapper>
       </SelectWrapper>
@@ -42,20 +42,21 @@ const GhostSelectWrapper = styled.select`
 const SelectWrapper = styled.div`
   position: relative;
   width: max-content;
-  
 `;
 
 const CustomSelectWrapper = styled.div`
   background-color: ${COLORS.transparentGray15};
   color: ${COLORS.gray700};
+  font-size: ${16 / 16}rem;
 
   height: 43px;
   padding: 12px 16px;
+  padding-right: 52px;
 
   border-radius: 8px;
 
   ${GhostSelectWrapper}:focus + & {
-    outline: 1px solid #212121;
+    outline: 1px dotted #212121;
     outline: 5px auto -webkit-focus-ring-color;
   }
 
@@ -64,12 +65,16 @@ const CustomSelectWrapper = styled.div`
   }
 `;
 
-const SelectedText = styled.span`
-  margin-right: 24px;
-`;
-
 const IconWrapper = styled.div`
-  display: inline-block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  width: var(--size);
+  height: var(--size);
+  margin: auto;
+
+  pointer-events: none;
 `;
 
 export default Select;
